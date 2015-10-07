@@ -1,0 +1,62 @@
+% #################################################################################
+% Copyright (C) 2015 Francesco Giovannini
+% Authors: Francesco Giovannini <joernano@gmail.com>
+% Website: http://www.francescogiovannini.com/
+% Permission is granted to copy, distribute, and/or modify this program
+% under the terms of the GNU General Public License, version 2 or any
+% later version published by the Free Software Foundation.
+%
+%
+% This program is distributed in the hope that it will be useful, but
+% WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+% Public License for more details
+% #################################################################################
+
+
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{exercises}[2015/10/07 Typesetting Exercises in LaTeX]
+
+% #################################################################################
+% Required Packages
+% #################################################################################
+\RequirePackage{kvoptions}
+\RequirePackage{titlesec}
+\RequirePackage{chngcntr}
+% #################################################################################
+
+
+% #################################################################################
+% Package Options
+% #################################################################################
+
+% Question Section
+%% Text to display
+\DeclareStringOption[Q ]{qlabel}[]
+
+%% Spacing around Question sections
+\DeclareStringOption[2ex]{qspacer}[] % Space on the right of \question
+\DeclareStringOption[0ex]{qspacel}[] % Space on the left of \question
+\DeclareStringOption[1ex]{qspacet}[] % Space above \question - NOT YET IMPLEMENTED
+\DeclareStringOption[0.5ex]{qspaceb}[] % Space below \question
+
+\ProcessKeyvalOptions*
+% #################################################################################
+
+
+% #################################################################################
+% Begin Package
+% #################################################################################
+\usepackage{titlesec} %FG: https://www.ctan.org/pkg/titlesec?lang=en
+    % Define a new \question sectioning element
+    \titleclass{\question}{straight}[\section]
+        \newcounter{question}
+    \titleformat{\question}[runin]{\normalfont\bfseries}{\exercises@qlabel \thequestion:}{0.5em}{}
+    \titlespacing*{\question}{\exercises@qspacel}{\exercises@qspaceb plus 1ex minus .2ex}{\exercises@qspacer plus .2ex}
+    \newcommand{\questionautorefname}{question}
+\usepackage{chngcntr} % FG: https://www.ctan.org/pkg/chngcntr
+    % Bind the question counter to the section
+    \counterwithin{question}{section}
+% #################################################################################    
+
+\endinput
